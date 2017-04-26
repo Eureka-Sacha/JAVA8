@@ -109,30 +109,48 @@ public class JavaIoTest {
         //print
         System.out.println(new String(get));
     }
-
     /**
-     * Save byte from stream.
+     * Write new file.
      *
      * @throws IOException the io exception
      */
     @Test
-    public void saveByteFromStream() throws IOException {
-        byte[] tempBytes = new String("Hello Bytes").getBytes();
-
-        OutputStream arrayOutput = new ByteArrayOutputStream();
-        InputStream bufferedInput = new BufferedInputStream(new ByteArrayInputStream(tempBytes));
-        byte[] bytes = new byte[1];
-        int n=0;
-        while ((n=bufferedInput.read(bytes))>-1) {
-            arrayOutput.write(bytes,0,n);
+    public void writeNewFile() throws IOException {
+        OutputStream bufferedOutput = new BufferedOutputStream(new FileOutputStream("d:\\temp\\测试.txt"));
+        for (int i = 0; i < 999999; i++) {
+            bufferedOutput.write(("" + i + "\r\n").getBytes());
         }
-        bufferedInput.close();
-        System.out.println(arrayOutput.toString());
-        arrayOutput.close();
+        bufferedOutput.close();
+    }
+    /**
+     * Copy file.
+     *
+     * @throws IOException the io exception
+     */
+    @Test
+    public void copyFile() throws IOException {
+//        byte[] tempBytes = new String("Hello Bytes").getBytes();
+
+        OutputStream fileOutput = new FileOutputStream(new File("D:\\temp\\copy.txt"));
+        OutputStream bufferedOutput = new BufferedOutputStream(fileOutput);
+        InputStream fileInput = new FileInputStream(new File("d:\\temp\\测试.txt"));
+        InputStream bufferedInput = new BufferedInputStream(fileInput);
+
+        byte[] bytes = new byte[8096];
+        int n = 0;
+        while ((n = bufferedInput.read(bytes)) > -1) {
+            bufferedOutput.write(bytes, 0, n);
+            bufferedOutput.flush();
+        }
+
+        close(bufferedInput);
+        close(bufferedOutput);
     }
 
     private void close(Closeable stream) throws IOException {
         stream.close();
     }
+
+
 
 }
