@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * The type Stream apple test.
+ * 测试
  */
 public class StreamAppleTest {
     /**
