@@ -16,9 +16,6 @@ import java.io.*;
  */
 public class JavaIoTest {
 
-    private InputStream inputStream;
-    private OutputStream outputStream;
-
     /**
      * New input stream test.
      *
@@ -99,8 +96,6 @@ public class JavaIoTest {
         InputStream arrayInput = new ByteArrayInputStream(tempBytes);
         //将字节流转换为缓冲字节流
         InputStream bufferedInput = new BufferedInputStream(arrayInput, 2 * 1024);
-        //关闭字节流
-        arrayInput.close();
 
         //读取到字节数组中
         bufferedInput.read(get);
@@ -111,41 +106,55 @@ public class JavaIoTest {
     }
     /**
      * Write new file.
+     * 随便写点东西到文件
      *
      * @throws IOException the io exception
      */
     @Test
     public void writeNewFile() throws IOException {
+        //创建缓冲输出流
         OutputStream bufferedOutput = new BufferedOutputStream(new FileOutputStream("d:\\temp\\测试.txt"));
+        //随便写入点东西
         for (int i = 0; i < 999999; i++) {
             bufferedOutput.write(("" + i + "\r\n").getBytes());
         }
+        //关闭流
         bufferedOutput.close();
     }
     /**
      * Copy file.
+     * 用流的方式复制文件
      *
      * @throws IOException the io exception
      */
     @Test
     public void copyFile() throws IOException {
-//        byte[] tempBytes = new String("Hello Bytes").getBytes();
-
+        //创建输出流 并装饰为缓冲流
         OutputStream fileOutput = new FileOutputStream(new File("D:\\temp\\copy.txt"));
         OutputStream bufferedOutput = new BufferedOutputStream(fileOutput);
+        //创建输入流  并装饰为缓冲
         InputStream fileInput = new FileInputStream(new File("d:\\temp\\测试.txt"));
         InputStream bufferedInput = new BufferedInputStream(fileInput);
-
+        //定义缓冲块
         byte[] bytes = new byte[8096];
+        //标记位
         int n = 0;
+        //循环   从输入流中读入到缓冲块, 并写入到缓冲输出流 0-标记位
         while ((n = bufferedInput.read(bytes)) > -1) {
             bufferedOutput.write(bytes, 0, n);
             bufferedOutput.flush();
         }
-
+        //关闭流
         close(bufferedInput);
         close(bufferedOutput);
     }
+
+    public void createReader(){
+
+    }
+
+
+
 
     private void close(Closeable stream) throws IOException {
         stream.close();
