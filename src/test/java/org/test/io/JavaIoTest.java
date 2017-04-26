@@ -14,7 +14,7 @@ import java.io.*;
  * @date: 2017 /4/24 11:27
  * @description:
  */
-public class InputStreamTest {
+public class JavaIoTest {
 
     private InputStream inputStream;
     private OutputStream outputStream;
@@ -109,6 +109,12 @@ public class InputStreamTest {
         //print
         System.out.println(new String(get));
     }
+
+    /**
+     * Save byte from stream.
+     *
+     * @throws IOException the io exception
+     */
     @Test
     public void saveByteFromStream() throws IOException {
         byte[] tempBytes = new String("Hello Bytes").getBytes();
