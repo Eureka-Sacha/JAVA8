@@ -104,6 +104,7 @@ public class JavaIoTest {
         //print
         System.out.println(new String(get));
     }
+
     /**
      * Write new file.
      * 随便写点东西到文件
@@ -121,6 +122,7 @@ public class JavaIoTest {
         //关闭流
         bufferedOutput.close();
     }
+
     /**
      * Copy file.
      * 用流的方式复制文件
@@ -149,17 +151,102 @@ public class JavaIoTest {
         close(bufferedOutput);
     }
 
-    public void createReader(){
+    /**
+     * Create reader.
+     *
+     * @throws IOException the io exception
+     */
+    @Test
+    public void createReaderTest() throws IOException {
+        StringBuffer tempString = new StringBuffer("Hello String");
+        char[] tempChars = new String("Hello Chars").toCharArray();
+        byte[] tempBytes = new String("Hello Bytes").getBytes();
+        File tempFile = FileUtil.createTempFile();
 
+        //最常用的字符流, 由字节流转换为字符流
+        Reader reader = new InputStreamReader(new FileInputStream(tempFile));
+        //字符流, 直接使用char[]创建
+        Reader charArrayReader = new CharArrayReader(tempChars);
+        //文件字符流   直接读取文本文件
+        Reader fileReader = new FileReader(tempFile);
+        //管道字符流   用法与字节流一致  创建时也需要绑定输出流
+        Reader pipedReader = new PipedReader(new PipedWriter());
+        //String字符流
+        Reader stringReader = new StringReader(tempString.toString());
+        //最常用的字符流装饰   缓冲字符流
+        Reader bufferedReader = new BufferedReader(reader, 1024 * 2);
+
+
+        close(reader);
+        close(charArrayReader);
+        close(fileReader);
+        close(pipedReader);
+        close(stringReader);
+        close(bufferedReader);
     }
 
+    /**
+     * Create writer.
+     *
+     * @throws IOException the io exception
+     */
+    @Test
+    public void createWriterTest() throws IOException {
+        StringBuffer tempString = new StringBuffer("Hello String");
+        char[] tempChars = new String("Hello Chars").toCharArray();
+        byte[] tempBytes = new String("Hello Bytes").getBytes();
+        File tempFile = FileUtil.createTempFile();
 
+        //装饰器   将字节流转换为字符流
+        Writer writer = new OutputStreamWriter(new ByteArrayOutputStream());
+        //字节流
+        Writer charArrayWriter = new CharArrayWriter();
+        //文件输出字符流
+        Writer fileWriter = new FileWriter(tempFile);
+        //管道输出流
+        Writer pipedWriter = new PipedWriter();
+        //String流
+        Writer stringWriter = new StringWriter();
+        //缓冲字符输出流
+        Writer bufferedWriter = new BufferedWriter(writer, 1024 * 2);
 
+        close(writer);
+        close(charArrayWriter);
+        close(fileWriter);
+        close(pipedWriter);
+        close(stringWriter);
+        close(bufferedWriter);
+    }
+
+    /**
+     * Split text file test.
+     *
+     * @throws IOException the io exception
+     */
+    @Test
+    public void splitTextFileTest() throws IOException {
+        File localFile = new File("d:\\temp\\ecology_20150809.log");
+        File path=new File("D:\\temp\\SplitTextFileTest\\");
+        Reader reader = new InputStreamReader(new FileInputStream(localFile));
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String s;
+        while ((s = bufferedReader.readLine()) != null) {
+            if (!path.exists()){
+                path.mkdir();
+            }
+            File temp = new File(path.getPath()+File.separator + (Math.random()*100000) + ".txt");
+            Writer writer = new FileWriter(temp);
+            writer.write(s);
+            writer.flush();
+            writer.close();
+
+        }
+        bufferedReader.close();
+    }
 
     private void close(Closeable stream) throws IOException {
         stream.close();
     }
-
 
 
 }
