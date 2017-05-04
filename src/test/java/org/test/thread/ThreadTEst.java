@@ -16,7 +16,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ThreadTest {
     private int i = 3;
-    /*
+    /* 1024778537  吴
      * 线程计数器
      * 	将线程数量初始化
      * 	每执行完成一条线程，调用countDown()使计数器减1
