@@ -1,6 +1,6 @@
 package org.test.io;
 
-import org.eureka.Utils.FileUtil;
+import org.eureka.utils.FileUtil;
 import org.junit.Test;
 
 import java.io.*;

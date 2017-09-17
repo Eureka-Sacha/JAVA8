@@ -33,7 +33,7 @@
     <!--基础属性 end-->
     <!--描述-->
     <description>
-        基于我本人的测试集合框架
+        瞎鸡巴写点东西
     </description>
     <inceptionYear>2017</inceptionYear>
     <organization>
@@ -105,13 +105,35 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.54</version>
+        </dependency>
+
+
+        <!--docker-java-->
+        <!-- https://mvnrepository.com/artifact/com.github.docker-java/docker-java -->
+        <dependency>
+            <groupId>com.github.docker-java</groupId>
+            <artifactId>docker-java</artifactId>
+            <version>3.0.13</version>
+        </dependency>
+        <!--docker-client-->
+        <!-- https://mvnrepository.com/artifact/com.spotify/docker-client -->
+        <dependency>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-client</artifactId>
+            <version>8.9.0</version>
+        </dependency>
         <!--spring核心包-->
         <dependency>
             <groupId>org.springframework</groupId>

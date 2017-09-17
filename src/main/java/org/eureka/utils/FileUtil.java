@@ -1,4 +1,4 @@
-package org.eureka.Utils;
+package org.eureka.utils;
 
 import java.io.File;
 import java.io.FileWriter;
